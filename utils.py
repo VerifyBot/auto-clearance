@@ -24,7 +24,12 @@ LOGIN_INFO_PATH = settings["LOGIN_INFO_PATH"]
 LOGS_DIR_PATH = settings["LOGS_DIR_PATH"]
 
 def get_info(app: str = None):
-  with open(LOGIN_INFO_PATH, encoding='utf-8') as fp:
+  info_path = os.path.join(
+    os.path.dirname(os.path.realpath(__file__)),
+    LOGIN_INFO_PATH
+  )
+
+  with open(info_path, encoding='utf-8') as fp:
     js = json.load(fp)
 
   return js[app] if app else js
