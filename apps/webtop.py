@@ -1,8 +1,10 @@
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.alert import Alert
+from selenium.common.exceptions import NoSuchElementException
 
 import utils
+import contextlib
 
 def webtop_main(**kw):
   username, password = kw.values()
@@ -29,8 +31,9 @@ def webtop_main(**kw):
     driver.get('https://www.webtop.co.il/corona.aspx')
     utils.wait(1)
 
-    driver.find_element_by_id('saveButton').click()
-    Alert(driver).accept()
+    with contextlib.suppress(NoSuchElementException):
+      driver.find_element_by_id('saveButton').click()
+      Alert(driver).accept()
 
     driver.close()
 
